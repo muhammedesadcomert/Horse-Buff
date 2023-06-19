@@ -14,20 +14,24 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = MinecraftClient.class, priority = 960)
 public abstract class InventoryAccessor {
-    @Shadow @Final private TutorialManager tutorialManager;
+    @Shadow
+    @Final
+    private TutorialManager tutorialManager;
 
-    @Shadow public abstract void setScreen(@Nullable Screen screen);
+    @Shadow
+    public abstract void setScreen(@Nullable Screen screen);
 
-    @Shadow @Nullable public ClientPlayerEntity player;
+    @Shadow
+    @Nullable
+    public ClientPlayerEntity player;
 
-    @Redirect(method= "handleInputEvents()V", at = @At(value = "INVOKE", target = "net/minecraft/client/network/ClientPlayerEntity.openRidingInventory ()V"))
-    void playerInventoryAccess(ClientPlayerEntity instance){
+    @Redirect(method = "handleInputEvents()V", at = @At(value = "INVOKE", target = "net/minecraft/client/network/ClientPlayerEntity.openRidingInventory ()V"))
+    void playerInventoryAccess(ClientPlayerEntity instance) {
         assert this.player != null;
         if (MinecraftClient.getInstance().options.sprintKey.isPressed()) {
             tutorialManager.onInventoryOpened();
             setScreen(new InventoryScreen(this.player));
-        }
-        else {
+        } else {
             instance.openRidingInventory();
         }
     }

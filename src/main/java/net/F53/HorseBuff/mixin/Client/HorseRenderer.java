@@ -13,14 +13,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AbstractHorseEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.awt.*;
 
-import static net.F53.HorseBuff.HorseBuffInit.*;
+import static net.F53.HorseBuff.HorseBuffInit.getOpacity;
+import static net.F53.HorseBuff.HorseBuffInit.isJeb;
 
 @Mixin(value = LivingEntityRenderer.class, priority = 960)
 public abstract class HorseRenderer<T extends LivingEntity, M extends EntityModel<T>> {
@@ -49,11 +51,11 @@ public abstract class HorseRenderer<T extends LivingEntity, M extends EntityMode
                 opacity = getOpacity(player);
             }
             if (isJeb(livingEntity)) {
-                float hueOffset = (livingEntity.getUuid().hashCode()%5000)/5000f + (System.currentTimeMillis()%5000)/5000f;
+                float hueOffset = (livingEntity.getUuid().hashCode() % 5000) / 5000f + (System.currentTimeMillis() % 5000) / 5000f;
                 Color color = new Color(Color.HSBtoRGB(hueOffset, 0.8f, 1));
-                r = color.getRed()/255f;
-                g = color.getGreen()/255f;
-                b = color.getBlue()/255f;
+                r = color.getRed() / 255f;
+                g = color.getGreen() / 255f;
+                b = color.getBlue() / 255f;
             }
         }
     }
@@ -70,7 +72,7 @@ public abstract class HorseRenderer<T extends LivingEntity, M extends EntityMode
 
     @ModifyArgs(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
     at = @At(value = "INVOKE", target = "net/minecraft/client/render/entity/model/EntityModel.render (Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
-    void setOpacityAndChromaForRender(Args args){
+    void setOpacityAndChromaForRender(Args args) {
         if (isHorse) {
             args.set(4, r);
             args.set(5, g);

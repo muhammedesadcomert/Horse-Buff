@@ -12,12 +12,13 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 // Disable movement checks for Horses, fixing MC-100830
 @Mixin(value = ServerPlayNetworkHandler.class, priority = 960)
 public class MovementCheck {
-	@Shadow public ServerPlayerEntity player;
+    @Shadow
+    public ServerPlayerEntity player;
 
-	@ModifyConstant(method = "onVehicleMove(Lnet/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket;)V", constant = @Constant(doubleValue = 0.0625D))
-	private double horseNoMovementCheck(double value){
-		if (this.player.getRootVehicle() instanceof AbstractHorseEntity && ModConfig.getInstance().rubberBand)
-			return Double.POSITIVE_INFINITY;
-		return value;
-	}
+    @ModifyConstant(method = "onVehicleMove(Lnet/minecraft/network/packet/c2s/play/VehicleMoveC2SPacket;)V", constant = @Constant(doubleValue = 0.0625D))
+    private double horseNoMovementCheck(double value) {
+        if (this.player.getRootVehicle() instanceof AbstractHorseEntity && ModConfig.getInstance().rubberBand)
+            return Double.POSITIVE_INFINITY;
+        return value;
+    }
 }

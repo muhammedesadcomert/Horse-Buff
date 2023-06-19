@@ -40,7 +40,7 @@ public class TransparentMarkings {
 
     @ModifyConstant(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V",
     constant = @Constant(floatValue = 1.0f))
-    float setOpacityForRender(float value){
+    float setOpacityForRender(float value) {
         return opacity;
     }
 }

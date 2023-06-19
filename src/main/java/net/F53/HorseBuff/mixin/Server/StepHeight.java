@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 // video displaying issue this fixes: https://user-images.githubusercontent.com/37855219/167529335-bea46c66-4ee2-4e3f-9391-f8cf2960d58a.mp4
 @Mixin(value = AbstractHorseEntity.class, priority = 960)
 public class StepHeight {
-	@ModifyConstant(method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V", constant = @Constant(floatValue = 1.0f))
-	private float horseHigherStepHeight(float value){
-		if (ModConfig.getInstance().stepHeight) {
-			return 1.1f;
-		}
-		return value;
-	}
+    @ModifyConstant(method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V", constant = @Constant(floatValue = 1.0f))
+    private float horseHigherStepHeight(float value) {
+        if (ModConfig.getInstance().stepHeight) {
+            return 1.1f;
+        }
+        return value;
+    }
 }

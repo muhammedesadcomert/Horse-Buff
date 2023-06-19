@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "horsebuff",
-  "version": "${version}",
+  "version": "${mod_version}",
 
   "accessWidener" : "horsebuff.accesswidener",
 
@@ -12,7 +12,7 @@
   ],
   "contact": {
     "homepage": "https://modrinth.com/mod/horsebuff",
-    "sources": "https://github.com/CodeF53/Horse-Buff"
+    "issues": "https://github.com/CodeF53/Horse-Buff/issues"
   },
 
   "license": "CC BY-NC-SA",
@@ -29,8 +29,8 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.6",
-    "minecraft": ">=1.19.4- <1.19.5-",
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${minecraft_version}",
     "java": ">=17"
   }
 }
